@@ -8,6 +8,7 @@ const Form = () => {
     handleSubmit,
     register,
     reset,
+    watch,
     formState: { errors, isValid },
     getValues,
   } = useForm();
@@ -24,49 +25,36 @@ const Form = () => {
     setIsModalOpen(false);
   };
 
+  const watchUsername = watch("name", "");
+  const watchEmail = watch("email", "");
+  const watchPassword = watch("password", "");
+  const watchConfirmPassword = watch("confirmPassword", "");
+
+  console.log(
+    watchUsername,
+    " ",
+    watchEmail,
+    " ",
+    watchPassword,
+    " ",
+    watchConfirmPassword
+  );
+
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        background: "#f0f0f0",
-      }}
-    >
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <motion.form
         onSubmit={handleSubmit(onSubmit)}
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        style={{
-          background: "white",
-          padding: "2rem",
-          borderRadius: "0.375rem",
-          boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-          maxWidth: "24rem",
-          width: "100%",
-        }}
+        className="bg-white p-8 rounded shadow-md max-w-md w-full"
       >
-        <h2
-          style={{
-            fontSize: "2rem",
-            fontWeight: "600",
-            marginBottom: "1.5rem",
-          }}
-        >
-          Register
-        </h2>
+        <h2 className="text-2xl font-semibold mb-6">Register</h2>
 
-        <div style={{ marginBottom: "1rem" }}>
+        <div className="mb-4">
           <label
-            style={{
-              display: "block",
-              fontSize: "0.875rem",
-              fontWeight: "500",
-              color: "#4b5563",
-            }}
             htmlFor="name"
+            className="block text-sm font-medium text-gray-700"
           >
             Name
           </label>
@@ -85,36 +73,19 @@ const Form = () => {
                 message: "Name should not exceed 30 characters",
               },
             })}
-            style={{
-              marginTop: "0.25rem",
-              padding: "0.5rem",
-              border: errors.name ? "1px solid #e53e3e" : "1px solid #d2d6dc",
-              borderRadius: "0.25rem",
-              width: "100%",
-            }}
+            className={`mt-1 px-3 py-2 border ${
+              errors.name ? "border-red-500" : "border-gray-300"
+            } rounded w-full`}
           />
           {errors.name && (
-            <p
-              style={{
-                color: "#e53e3e",
-                fontSize: "0.75rem",
-                marginTop: "0.25rem",
-              }}
-            >
-              {errors.name.message}
-            </p>
+            <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>
           )}
         </div>
 
-        <div style={{ marginBottom: "1rem" }}>
+        <div className="mb-4">
           <label
-            style={{
-              display: "block",
-              fontSize: "0.875rem",
-              fontWeight: "500",
-              color: "#4b5563",
-            }}
             htmlFor="email"
+            className="block text-sm font-medium text-gray-700"
           >
             Email
           </label>
@@ -129,36 +100,19 @@ const Form = () => {
                 message: "Invalid email address",
               },
             })}
-            style={{
-              marginTop: "0.25rem",
-              padding: "0.5rem",
-              border: errors.email ? "1px solid #e53e3e" : "1px solid #d2d6dc",
-              borderRadius: "0.25rem",
-              width: "100%",
-            }}
+            className={`mt-1 px-3 py-2 border ${
+              errors.email ? "border-red-500" : "border-gray-300"
+            } rounded w-full`}
           />
           {errors.email && (
-            <p
-              style={{
-                color: "#e53e3e",
-                fontSize: "0.75rem",
-                marginTop: "0.25rem",
-              }}
-            >
-              {errors.email.message}
-            </p>
+            <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
           )}
         </div>
 
-        <div style={{ marginBottom: "1rem" }}>
+        <div className="mb-4">
           <label
-            style={{
-              display: "block",
-              fontSize: "0.875rem",
-              fontWeight: "500",
-              color: "#4b5563",
-            }}
             htmlFor="password"
+            className="block text-sm font-medium text-gray-700"
           >
             Password
           </label>
@@ -177,38 +131,21 @@ const Form = () => {
                 message: "Password must contain at least one special character",
               },
             })}
-            style={{
-              marginTop: "0.25rem",
-              padding: "0.5rem",
-              border: errors.password
-                ? "1px solid #e53e3e"
-                : "1px solid #d2d6dc",
-              borderRadius: "0.25rem",
-              width: "100%",
-            }}
+            className={`mt-1 px-3 py-2 border ${
+              errors.password ? "border-red-500" : "border-gray-300"
+            } rounded w-full`}
           />
           {errors.password && (
-            <p
-              style={{
-                color: "#e53e3e",
-                fontSize: "0.75rem",
-                marginTop: "0.25rem",
-              }}
-            >
+            <p className="text-red-500 text-xs mt-1">
               {errors.password.message}
             </p>
           )}
         </div>
 
-        <div style={{ marginBottom: "1rem" }}>
+        <div className="mb-4">
           <label
-            style={{
-              display: "block",
-              fontSize: "0.875rem",
-              fontWeight: "500",
-              color: "#4b5563",
-            }}
             htmlFor="confirmPassword"
+            className="block text-sm font-medium text-gray-700"
           >
             Repeat Password
           </label>
@@ -220,24 +157,12 @@ const Form = () => {
               validate: (value) =>
                 value === getValues("password") || "Passwords do not match",
             })}
-            style={{
-              marginTop: "0.25rem",
-              padding: "0.5rem",
-              border: errors.confirmPassword
-                ? "1px solid #e53e3e"
-                : "1px solid #d2d6dc",
-              borderRadius: "0.25rem",
-              width: "100%",
-            }}
+            className={`mt-1 px-3 py-2 border ${
+              errors.confirmPassword ? "border-red-500" : "border-gray-300"
+            } rounded w-full`}
           />
           {errors.confirmPassword && (
-            <p
-              style={{
-                color: "#e53e3e",
-                fontSize: "0.75rem",
-                marginTop: "0.25rem",
-              }}
-            >
+            <p className="text-red-500 text-xs mt-1">
               {errors.confirmPassword.message}
             </p>
           )}
@@ -248,82 +173,43 @@ const Form = () => {
           disabled={!isValid}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          style={{
-            width: "100%",
-            padding: "1rem",
-            fontSize: "1rem",
-            background: isValid ? "#1e40af" : "#cbd5e0",
-            color: "white",
-            borderRadius: "0.25rem",
-            cursor: isValid ? "pointer" : "not-allowed",
-          }}
+          className={`w-full p-4 text-white rounded cursor-${
+            isValid ? "pointer" : "not-allowed"
+          } ${isValid ? "bg-indigo-600" : "bg-gray-400"}`}
         >
           Register
         </motion.button>
       </motion.form>
+
       <Transition show={isModalOpen} as={React.Fragment}>
         <Dialog
           as="div"
           className="fixed inset-0 z-10 overflow-y-auto"
           onClose={closeModal}
         >
-          <div
-            style={{ minHeight: "100vh", padding: "1rem", textAlign: "center" }}
-          >
+          <div className="min-h-screen p-4 text-center">
             <Transition.Child
               as={motion.div}
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
               transition={{ duration: 0.5 }}
-              style={{ display: "inline-block", verticalAlign: "middle" }}
+              className="inline-block align-middle"
             >
-              <Dialog.Overlay
-                style={{
-                  position: "fixed",
-                  inset: 0,
-                }}
-              />
-              <div
-                style={{
-                  display: "inline-block",
-                  maxWidth: "30rem",
-                  padding: "3rem",
-                  margin: "8% auto",
-                  background: "white",
-                  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                  borderRadius: "0.375rem",
-                }}
-              >
-                <Dialog.Title
-                  style={{
-                    fontSize: "2.5rem",
-                    fontWeight: "600",
-                    color: "#1a202c",
-                  }}
-                >
+              <Dialog.Overlay className="fixed inset-0" />
+              <div className="max-w-md p-12 mx-auto bg-white rounded shadow-md">
+                <Dialog.Title className="text-2xl font-semibold text-gray-800">
                   Registration Successful
                 </Dialog.Title>
-                <div style={{ marginTop: "0.5rem" }}>
-                  <p style={{ fontSize: "1.5rem", color: "#4b5563" }}>
+                <div className="mt-2">
+                  <p className="text-xl text-gray-600">
                     Your registration was successful!
                   </p>
                 </div>
-                <div style={{ marginTop: "1rem" }}>
+                <div className="mt-4">
                   <button
                     type="button"
-                    style={{
-                      display: "inline-flex",
-                      justifyContent: "center",
-                      padding: "0.5rem 1rem",
-                      fontSize: "1rem",
-                      fontWeight: "600",
-                      color: "white",
-                      background: "#1e40af",
-                      border: "none",
-                      borderRadius: "0.25rem",
-                      cursor: "pointer",
-                    }}
+                    className="inline-flex justify-center px-4 py-2 text-white font-semibold bg-indigo-600 border border-transparent rounded cursor-pointer"
                     onClick={closeModal}
                   >
                     Close
